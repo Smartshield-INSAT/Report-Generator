@@ -1,0 +1,10 @@
+crewai 
+streamlit 
+pandas 
+langchain_community 
+langchain_groq
+matplotlib 
+numpy 
+pillow 
+crewai[tools]==0.30.11
+python-dotenv

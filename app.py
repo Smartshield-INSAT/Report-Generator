@@ -1,4 +1,4 @@
-from utils import json_to_string, display_message, save_report_as_pdf, get_groq_client
+from utils import *
 from langchain_groq import ChatGroq
 from agents import create_agents
 from dotenv import load_dotenv
@@ -55,11 +55,12 @@ def main():
             placeholder.markdown("") 
             display_message(task.agent.role, result)
 
-        print(result)
-
         # Save the enhanced report as a PDF
         pdf_file_path = "cybersecurity_report" + str(uuid.uuid4()) + ".pdf" 
-        save_report_as_pdf(result, pdf_file_path)
+        #save_report_as_pdf(result, pdf_file_path)
+        html_report = generate_html_report(result, client)
+        print(html_report)
+        html_to_pdf(html_report, pdf_file_path)
         
         st.download_button(
             label="Download Cybersecurity Report",

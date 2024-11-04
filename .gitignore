@@ -2,3 +2,4 @@
 .env
 enhanced_report.pdf
 *.tex
+/tsyp

@@ -9,15 +9,22 @@ from datetime import datetime
 from groq import Groq
 
 def html_to_pdf(html_text, output_pdf_path):
+    options = {
+        'page-size': 'A4',
+        # Enable smart shrinking to fit content
+        'enable-smart-shrinking': True,
+    }
     config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
     pdfkit.from_string(html_text, output_pdf_path, configuration=config)
 
 def generate_html_report(data, client):
     chat_completion = client.chat.completions.create(
-        messages=[
+        messages = [
             {
                 "role": "user",
-                "content": data + " \n Convert the following Markdown report into a visually appealing and professional HTML page suited for a cybersecurity threat detection report. Maintain the content exactly as it is, without modifications. Apply CSS styling to create a polished and modern look, ensuring readability and aesthetic appeal. Return only the HTML content, without any additional text or explanations.",
+                "content": (
+                    data + "\n Convert this report into a professional, visually appealing HTML page designed for a cybersecurity threat detection report. Maintain the exact content without any alterations. Use CSS to create a modern and polished design, prioritizing readability, organized layout, and aesthetic appeal. Implement distinct sections, headers, and subheaders, and use color schemes appropriate for cybersecurity contexts (such as dark and red). Include icons or styling for important elements to highlight key information. Return only the HTML content without additional text or explanations."
+                ),
             }
         ],
         model="mixtral-8x7b-32768",

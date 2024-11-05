@@ -60,6 +60,11 @@ def main():
         #save_report_as_pdf(result, pdf_file_path)
         html_report = generate_html_report(result, client)
         print(html_report)
+        # Save the enhanced report as a .html file
+        html_file_path = "cybersecurity_report" + str(uuid.uuid4()) + ".html"
+        with open(html_file_path, "w") as file:
+            file.write(html_report)
+            
         html_to_pdf(html_report, pdf_file_path)
         
         st.download_button(

@@ -5,5 +5,5 @@ enhanced_report.pdf
 /tsyp
 *.pdf
 *.html
-
 /venv/
+**/__pycache__/

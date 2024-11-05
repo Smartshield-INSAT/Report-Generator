@@ -19,7 +19,9 @@ async def generate_report(generate_report_request: GenerateReportRequest):
         threat_data = generate_report_request.threat_data
 
         report_pdf_file_path = await agenerate_report(threat, threat_data)
-
+        if report_pdf_file_path is None:
+            logger.error("Report generation failed, no path returned.")
+            raise HTTPException(status_code=500, detail="Failed to generate report")
         if not os.path.exists(report_pdf_file_path):
             logger.error(f"Report PDF file not found at path: {report_pdf_file_path}")
             raise HTTPException(status_code=404, detail="Report not found")

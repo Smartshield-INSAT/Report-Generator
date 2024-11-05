@@ -37,7 +37,7 @@ if __name__ == "__main__":
         uvicorn.run(
             app,
             port=8002,
-            host="0.0.0.0",
+            host="localhost",
 
         )
     except KeyboardInterrupt as ki : 

@@ -9,7 +9,8 @@ class Settings(BaseSettings):
     Settings class for this application.
     Utilizes the BaseSettings from pydantic for environment variables.
     """
-
+    GROQ_API_KEY : str 
+    MODEL : str 
     class Config:
         env_file = ".env"
         extra = "ignore"
@@ -30,5 +31,4 @@ def get_settings() -> Settings:
     else:
         raise ValueError(f"Invalid environment: {environment}")
 
-    # Load settings from the respective .env file
-    return Settings(_env_file=settings_file)  # type: ignore
+    return Settings(_env_file=settings_file) 

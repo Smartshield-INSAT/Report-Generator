@@ -7,7 +7,7 @@ import os
 from fpdf import FPDF, HTMLMixin
 from datetime import datetime
 from groq import Groq
-
+import os 
 def html_to_pdf(html_text, output_pdf_path):
     options = {
         'page-size': 'A3',

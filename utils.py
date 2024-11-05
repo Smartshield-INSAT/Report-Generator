@@ -10,12 +10,21 @@ from groq import Groq
 
 def html_to_pdf(html_text, output_pdf_path):
     options = {
-        'page-size': 'A4',
-        # Enable smart shrinking to fit content
+        'page-size': 'A3',
+        'margin-top': '0mm',
+        'margin-right': '0mm',
+        'margin-bottom': '0mm',
+        'margin-left': '0mm',
+        'encoding': 'UTF-8',
+        'no-outline': None,
+        'enable-local-file-access': None,
+        'dpi': 300,
+        'zoom': 1.0,
         'enable-smart-shrinking': True,
+        'print-media-type': True
     }
     config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
-    pdfkit.from_string(html_text, output_pdf_path, configuration=config)
+    pdfkit.from_string(html_text, output_pdf_path,options=options, configuration=config)
 
 def generate_html_report(data, client):
     chat_completion = client.chat.completions.create(

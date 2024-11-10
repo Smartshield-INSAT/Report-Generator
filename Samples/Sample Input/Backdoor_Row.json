@@ -1,0 +1,1 @@
+{"dur":0.000009,"proto":"ddp","service":"-","state":"INT","spkts":2,"sbytes":200,"dbytes":0,"rate":111111.109375,"sload":88888888.0,"dload":0.0,"sinpkt":0.0089999996,"dinpkt":0.0,"sjit":0.0,"djit":0.0,"tcprtt":0.0,"smean":100,"trans_depth":0,"response_body_len":0,"ct_src_dport_ltm":1,"is_ftp_login":0,"ct_flw_http_mthd":0,"is_sm_ips_ports":0}

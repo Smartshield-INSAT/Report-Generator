@@ -8,6 +8,15 @@ from typing import Any, Callable
 class CustomColourizedFormatter(ColourizedFormatter):
     def format(self, record: logging.LogRecord) -> str:
         # Define color mappings for different log levels
+        """Formats a log record with color-coded log levels.
+        
+        Args:
+            self: The instance of the formatter class.
+            record (logging.LogRecord): The log record to be formatted.
+        
+        Returns:
+            str: The formatted log message with color-coded log level.
+        """
         level_color_map = {
             "DEBUG": "\033[34m",    # Blue
             "INFO": "\033[32m",     # Green
@@ -72,6 +81,15 @@ def log_function_call(logger: logging.Logger) -> Callable:
     """
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
+        """Decorator function that wraps another function to add logging functionality.
+        
+        Args:
+            func (Callable): The function to be decorated.
+        
+        Returns:
+            Callable: A wrapped version of the input function with added logging.
+        
+        """
         def wrapper(*args, **kwargs) -> Any:
             # Log the function call with arguments
             logger.debug(f"Calling {func.__name__} with args: {args} and kwargs: {kwargs}")

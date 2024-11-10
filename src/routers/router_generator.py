@@ -14,6 +14,17 @@ router = APIRouter(prefix="/generator")
 
 @router.post(path="/generate-report")
 async def generate_report(generate_report_request: GenerateReportRequest):
+    """Generates a PDF report based on the provided threat and threat data, and returns it as a streaming response.
+    
+    Args:
+        generate_report_request (GenerateReportRequest): An object containing the threat and threat data required for report generation.
+    
+    Returns:
+        StreamingResponse: A streaming response containing the generated PDF report.
+    
+    Raises:
+        HTTPException: If report generation fails (500), if the report file is not found (404), or if any other error occurs during the process (500).
+    """
     try:
         threat = generate_report_request.threat
         threat_data = generate_report_request.threat_data

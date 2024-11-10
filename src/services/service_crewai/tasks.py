@@ -1,6 +1,16 @@
 from crewai import Task
 
 def create_tasks(agents, detected_threat, threat_data):
+    """Creates a sequence of tasks for analyzing and responding to a detected threat.
+    
+    Args:
+        agents (dict): A dictionary containing agent objects for different roles.
+        detected_threat (str): A description of the detected threat.
+        threat_data (str): Additional data related to the detected threat.
+    
+    Returns:
+        list: A list of Task objects representing the sequence of tasks to be executed.
+    """
     task_analyze_threat = Task(
         description=f"""
         Analyze the detected threat: {detected_threat}

@@ -15,6 +15,18 @@ logger = get_logger(__file__)
 
 
 async def agenerate_report(threat : str , threat_data : Dict ) : 
+    """Asynchronously generates a cybersecurity report based on the given threat and threat data.
+    
+    Args:
+        threat (str): The type or name of the threat to be analyzed.
+        threat_data (Dict): A dictionary containing relevant data about the threat.
+    
+    Returns:
+        str: The file path of the generated PDF report.
+    
+    Raises:
+        Exception: If an error occurs during the report generation process.
+    """
     try : 
         client = get_groq_client()
         llm = ChatGroq(

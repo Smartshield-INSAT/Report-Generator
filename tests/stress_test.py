@@ -6,6 +6,18 @@ import matplotlib.pyplot as plt
 URL = "http://localhost:8002/generator/generate-report"  
 
 async def make_request(client, data):
+    """Makes an asynchronous HTTP POST request to a predefined URL.
+    
+    Args:
+        client: An asynchronous HTTP client object capable of making POST requests.
+        data (dict): The JSON data to be sent in the request body.
+    
+    Returns:
+        float or None: The time taken for the request in seconds if successful, or None if the request fails.
+    
+    Raises:
+        Exception: If the request fails for any reason. The error is printed to console.
+    """
     try:
         response = await client.post(URL, json=data)
         response.raise_for_status()
@@ -15,6 +27,17 @@ async def make_request(client, data):
         return None
 
 async def stress_test_wave(wave_num, num_clients, request_data):
+    """Perform a stress test for a specific wave of client requests.
+    
+    Args:
+        wave_num (int): The wave number for this stress test.
+        num_clients (int): The number of simultaneous client requests to simulate.
+        request_data (dict): The data to be sent in each client request.
+    
+    Returns:
+        List[float]: A list of response times for successful requests.
+    
+    """
     async with httpx.AsyncClient() as client:
         tasks = [make_request(client, request_data) for _ in range(num_clients)]
         results = await asyncio.gather(*tasks)
@@ -23,6 +46,34 @@ async def stress_test_wave(wave_num, num_clients, request_data):
         return response_times
 
 async def run_stress_test():
+    """Executes a stress test with multiple waves of concurrent clients.
+    
+    Args:
+        None
+    
+    Returns:
+        list: A list of response times from all waves of the stress test.
+    
+    Raises:
+        None
+    
+    Description:
+        This asynchronous function performs a stress test by simulating multiple waves of concurrent clients
+        sending requests. It uses a predefined request payload and runs a specified number of waves with
+        a set number of clients per wave. The function collects response times from each wave and returns
+        the combined results.
+    
+        The stress test parameters are:
+        - Number of clients per wave: 10
+        - Number of waves: 4
+        - Request payload: A dictionary containing 'threat' and 'threat_data'
+    
+        Between each wave, there is a short pause of 1 second to allow for system cooldown.
+    
+    Note:
+        This function depends on an external 'stress_test_wave' coroutine, which is not shown in the
+        provided code snippet. Ensure that this dependency is properly implemented and available.
+    """
     request_data = {
         "threat": "Sample Threat",
         "threat_data": {"example_key": "example_value"}

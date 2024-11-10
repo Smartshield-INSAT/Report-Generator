@@ -29,8 +29,6 @@ async def generate_report(generate_report_request: GenerateReportRequest):
         with open(report_pdf_file_path, "rb") as report_file:
             pdf_content = io.BytesIO(report_file.read())
 
-        os.remove(report_pdf_file_path)
-
         # Return the PDF content as a StreamingResponse
         pdf_content.seek(0)
         return StreamingResponse(
@@ -38,7 +36,7 @@ async def generate_report(generate_report_request: GenerateReportRequest):
             media_type="application/pdf",
             headers={"Content-Disposition": "attachment; filename=report.pdf"}
         )
-
+    
     except Exception as e:
         logger.error(f"Critical Error occurred in router_generator.generate_report: {e}")
         raise HTTPException(status_code=500, detail="An error occurred while generating the report")

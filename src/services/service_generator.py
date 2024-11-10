@@ -2,6 +2,7 @@ from langchain_groq import ChatGroq
 from crewai import Crew
 import uuid
 import os
+from fastapi.responses import FileResponse
 from typing import Dict 
 from src.config.settings import get_settings
 from src.logger.logger import get_logger
@@ -30,13 +31,18 @@ async def agenerate_report(threat : str , threat_data : Dict ) :
         )
         for task in crew.tasks:
             result = task.execute()
-            
-        pdf_file_path = "cybersecurity_report" + str(uuid.uuid4()) + ".pdf" 
-        html_report = generate_html_report(result, client)
-                
-        html_to_pdf(html_report, pdf_file_path)
 
-        return pdf_file_path 
+        path_prefix = r"C:\\Users\\"
+        pdf_file_name = r"cybersecurity_report" + str(uuid.uuid4()) + ".pdf" 
+        pdf_file_path = path_prefix + pdf_file_name
+        print("PDF file path :", pdf_file_path)
+        html_report = generate_html_report(result, client)
+        print(html_report)
+        html_to_pdf(html_report, pdf_file_path)
+        print("HTML to PDF conversion done")
+
+        return pdf_file_path
+
 
     except Exception as e :
         logger.error(f"Error occured in service_report_generator.generate_report : {e}")

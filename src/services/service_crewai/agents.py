@@ -2,6 +2,17 @@
 from crewai import Agent
 
 def create_agents(llm):
+    """Creates and returns a dictionary of Agent objects for a cybersecurity system.
+    
+    Args:
+        llm (object): The language model object to be used by the agents.
+    
+    Returns:
+        dict: A dictionary containing three Agent objects:
+            - "Threat_Analyzer_Agent": An agent responsible for analyzing detected threats.
+            - "Mitigation_Strategist_Agent": An agent tasked with developing mitigation strategies.
+            - "Report_Generator_Agent": An agent that compiles information into a comprehensive report.
+    """
     Threat_Analyzer_Agent = Agent(
         role='Threat_Analyzer_Agent',
         goal="Analyze detected threats using provided data and produce a factual, detailed report on their nature, potential impact, and severity.",

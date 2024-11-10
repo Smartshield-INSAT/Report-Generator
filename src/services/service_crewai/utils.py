@@ -9,6 +9,20 @@ from datetime import datetime
 from groq import Groq
 import os 
 def html_to_pdf(html_text, output_pdf_path):
+    """Converts HTML text to a PDF file using pdfkit and wkhtmltopdf.
+    
+    Args:
+        html_text (str): The HTML content to be converted to PDF.
+        output_pdf_path (str): The file path where the output PDF will be saved.
+    
+    Returns:
+        None: This function does not return any value, but creates a PDF file at the specified output path.
+    
+    Raises:
+        IOError: If there's an issue writing to the output file.
+        OSError: If wkhtmltopdf is not found at the specified path.
+        pdfkit.exceptions.PDFKitError: If there's an error during PDF generation.
+    """
     options = {
         'page-size': 'A3',
         'margin-top': '0mm',
@@ -27,6 +41,18 @@ def html_to_pdf(html_text, output_pdf_path):
     pdfkit.from_string(html_text, output_pdf_path,options=options, configuration=config)
 
 def generate_html_report(data, client):
+    """Generate an HTML report for cybersecurity threat detection based on provided data.
+    
+    Args:
+        data (str): The input data containing the cybersecurity threat detection report.
+        client (OpenAIClient): The OpenAI client object used to make API calls.
+    
+    Returns:
+        str: The generated HTML content for the cybersecurity threat detection report.
+    
+    Raises:
+        OpenAIError: If there's an issue with the API call to OpenAI.
+    """
     chat_completion = client.chat.completions.create(
         messages = [
             {
@@ -41,6 +67,18 @@ def generate_html_report(data, client):
     return chat_completion.choices[0].message.content
 
 def json_to_string(json_data):
+    """Converts JSON data to a JSON-formatted string.
+    
+    Args:
+        json_data (file-like object): A file-like object containing JSON data.
+    
+    Returns:
+        str: A JSON-formatted string representation of the input data.
+    
+    Raises:
+        JSONDecodeError: If the input is not valid JSON.
+        IOError: If there's an error reading the input file-like object.
+    """
     data = json.load(json_data)
     return json.dumps(data)
 
@@ -49,11 +87,31 @@ def get_groq_client():
     return Groq(api_key=groq_api)
 
 def display_message(role, content):
+    """Displays a formatted message in a Streamlit app with the specified role and content.
+    
+    Args:
+        role (str): The role or identity of the message sender (e.g., 'User', 'Assistant').
+        content (str): The content of the message to be displayed.
+    
+    Returns:
+        None: This function does not return a value, it displays the message in the Streamlit app.
+    """
     st.markdown(f"**{role}**: {content}")
 
 class CustomPDF(FPDF, HTMLMixin):
     def header(self):
         # Arial bold 15
+        """Generates and adds a header to the PDF document.
+        
+        This method sets up the font, calculates the width of the title, positions it,
+        and adds a line break after the title.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method does not return anything, it modifies the PDF document in-place.
+        """
         self.set_font('Arial', 'B', 15)
         # Calculate width of title and position
         self.cell(0, 10, 'Cybersecurity Threat Analysis Report', 0, 1, 'C')
@@ -62,6 +120,19 @@ class CustomPDF(FPDF, HTMLMixin):
         
     def footer(self):
         # Position at 1.5 cm from bottom
+        """Generates and adds a footer to the current page.
+        
+        This method positions the footer 1.5 cm from the bottom of the page, sets the font to Arial italic 8,
+        and adds a centered page number in the format 'Page X/Y', where X is the current page number and Y
+        is the total number of pages.
+        
+        Args:
+            self: The current instance of the class.
+        
+        Returns:
+            None
+        
+        """
         self.set_y(-15)
         # Arial italic 8
         self.set_font('Arial', 'I', 8)
